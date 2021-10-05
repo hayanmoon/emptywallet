@@ -55,8 +55,8 @@ package:
     - ./bin/**
 
 functions:
-  hello:
-    handler: bin/hello
+  createtransaction:
+    handler: bin/createtransaction
     events:
       - httpApi:
           path: /hello
