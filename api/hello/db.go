@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -16,15 +17,11 @@ type Transaction struct {
 	Amount   string `dynamodbav:"amount"`
 }
 
-// type DbRepo interface {
-// 	Create(t Transaction) error
-// }
-
 type TransactionRepository struct {
 	db *dynamodb.Client
 }
 
-func (t *TransactionRepository) Create(transaction Transaction) {
+func (t *TransactionRepository) Create(transaction Transaction) error {
 	//condition for existing name attribute
 	nameNotExist := expression.AttributeNotExists(expression.Name("username"))
 	builder := expression.NewBuilder().WithCondition(nameNotExist)
@@ -34,15 +31,17 @@ func (t *TransactionRepository) Create(transaction Transaction) {
 
 	input := &dynamodb.PutItemInput{
 		TableName:                aws.String("transaction"),
-		ConditionExpression:      exp.Condition(), // fail put if username already exist
+		ConditionExpression:      exp.Condition(), // fail if username already exist
 		ExpressionAttributeNames: exp.Names(),
 		Item:                     item,
 	}
 
-	something, err := t.db.PutItem(context.TODO(), input)
-	fmt.Println(something, err)
+	_, err := t.db.PutItem(context.TODO(), input)
 
 	if err != nil {
 		fmt.Println("Transaction: cannot save transaction")
+		return errors.New("Create: could not create transaction")
 	}
+
+	return nil
 }

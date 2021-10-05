@@ -36,8 +36,11 @@ func Handler(ctx context.Context, req Request) (Response, error) {
 		Amount:   "1234",
 	}
 
-	transactionRepo.Create(transaction)
+	err = transactionRepo.Create(transaction)
 
+	if err != nil {
+		return Response{StatusCode: http.StatusInternalServerError}, err
+	}
 	// session, err := session.NewSession()
 	// client := dynamodb.New(session)
 	// repo := TransactionRepository{client}
