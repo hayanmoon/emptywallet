@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"strconv"
-	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -22,6 +22,7 @@ type Request events.APIGatewayProxyRequest
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context, req Request) (Response, error) {
+	var transaction Transaction
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
@@ -32,13 +33,21 @@ func Handler(ctx context.Context, req Request) (Response, error) {
 
 	transactionRepo := TransactionRepository{client}
 
-	transaction := Transaction{
-		Username:    "ivan",
-		Timestamp:   strconv.FormatInt(time.Now().Unix(), 10),
-		Title:       "test",
-		Description: "test",
-		Amount:      "1234",
+	err = json.Unmarshal([]byte(req.Body), &transaction)
+
+	if err != nil {
+		return Response{StatusCode: http.StatusBadRequest}, err
 	}
+
+	fmt.Println(transaction)
+
+	// transaction := Transaction{
+	// 	Username:    "ivan",
+	// 	Timestamp:   strconv.FormatInt(time.Now().Unix(), 10),
+	// 	Title:       "test",
+	// 	Description: "test",
+	// 	Amount:      "1234",
+	// }
 
 	err = transactionRepo.Create(transaction)
 
