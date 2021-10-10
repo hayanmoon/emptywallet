@@ -1,5 +1,6 @@
 {
   "resource": "/",
-  "path": "/",
-  "httpMethod": "GET"
+  "path": "/transaction",
+  "httpMethod": "PUT",
+  "body": "{\"username\":\"ivan\",\"title\":\"test\",\"description\":\"test\",\"amount\":\"1234\"}"
 }
