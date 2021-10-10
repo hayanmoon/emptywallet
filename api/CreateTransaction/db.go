@@ -11,10 +11,14 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 )
 
+const TransactionTable = "Transaction"
+
 type Transaction struct {
-	Id       string `dynamodbav:"id"`
-	Username string `dynamodbav:"username"`
-	Amount   string `dynamodbav:"amount"`
+	Username    string `dynamodbav:"username"`
+	Timestamp   string `dynamodbav:"timestamp"`
+	Title       string `dynamodbav:"title"`
+	Description string `dynamodbav:"description"`
+	Amount      string `dynamodbav:"amount"`
 }
 
 type TransactionRepository struct {
@@ -30,7 +34,7 @@ func (t *TransactionRepository) Create(transaction Transaction) error {
 	item, _ := attributevalue.MarshalMap(transaction)
 
 	input := &dynamodb.PutItemInput{
-		TableName:                aws.String("transaction"),
+		TableName:                aws.String(TransactionTable),
 		ConditionExpression:      exp.Condition(), // fail if username already exist
 		ExpressionAttributeNames: exp.Names(),
 		Item:                     item,
@@ -39,7 +43,7 @@ func (t *TransactionRepository) Create(transaction Transaction) error {
 	_, err := t.db.PutItem(context.TODO(), input)
 
 	if err != nil {
-		fmt.Println("Transaction: cannot save transaction")
+		fmt.Println(err)
 		return errors.New("Create: could not create transaction")
 	}
 

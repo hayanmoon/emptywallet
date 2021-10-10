@@ -59,8 +59,8 @@ functions:
     handler: bin/createtransaction
     events:
       - httpApi:
-          path: /hello
-          method: get
+          path: /transaction
+          method: put
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -113,3 +113,23 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+resources:
+  Resources:
+    TransactionTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Transaction
+        AttributeDefinitions:
+          - AttributeName: username
+            AttributeType: S
+          - AttributeName: timestamp
+            AttributeType: S
+        KeySchema:
+          - AttributeName: username
+            KeyType: HASH
+          - AttributeName: timestamp
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5

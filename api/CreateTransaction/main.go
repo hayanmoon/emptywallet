@@ -4,6 +4,8 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -31,9 +33,11 @@ func Handler(ctx context.Context, req Request) (Response, error) {
 	transactionRepo := TransactionRepository{client}
 
 	transaction := Transaction{
-		Id:       "1",
-		Username: "ivan",
-		Amount:   "1234",
+		Username:    "ivan",
+		Timestamp:   strconv.FormatInt(time.Now().Unix(), 10),
+		Title:       "test",
+		Description: "test",
+		Amount:      "1234",
 	}
 
 	err = transactionRepo.Create(transaction)
