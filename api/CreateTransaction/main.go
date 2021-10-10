@@ -22,7 +22,7 @@ type Request events.APIGatewayProxyRequest
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context, req Request) (Response, error) {
-	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("ap-southeast-1"))
+	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
 		log.Fatal("Config: cannot load configuration")
@@ -67,7 +67,7 @@ func Handler(ctx context.Context, req Request) (Response, error) {
 	// 		"Content-Type": "application/json",
 	// 	},
 	// }
-	return Response{StatusCode: http.StatusOK}, nil
+	return Response{StatusCode: http.StatusCreated}, nil
 }
 
 func main() {
