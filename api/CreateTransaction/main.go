@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -22,7 +24,10 @@ type Request events.APIGatewayProxyRequest
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context, req Request) (Response, error) {
-	var transaction Transaction
+	transaction := Transaction{
+		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
+	}
+
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
