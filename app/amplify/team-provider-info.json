@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-emptywallet-dev-133630-authRole",
+      "UnauthRoleArn": "arn:aws:iam::120495798155:role/amplify-emptywallet-dev-133630-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::120495798155:role/amplify-emptywallet-dev-133630-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-emptywallet-dev-133630-deployment",
+      "UnauthRoleName": "amplify-emptywallet-dev-133630-unauthRole",
+      "StackName": "amplify-emptywallet-dev-133630",
+      "StackId": "arn:aws:cloudformation:us-east-1:120495798155:stack/amplify-emptywallet-dev-133630/09e398c0-2e43-11ec-8f1b-0ea0edc1b421",
+      "AmplifyAppId": "d2ei8749thdiz1"
+    },
+    "categories": {
+      "auth": {
+        "emptywallet937911c6": {}
+      }
+    }
+  }
+}
