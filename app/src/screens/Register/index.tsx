@@ -5,9 +5,10 @@ import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 type FormData = {
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
-const Login = () => {
+const Register = () => {
   const {
     control,
     handleSubmit,
@@ -28,13 +29,14 @@ const Login = () => {
             style={styles.input}
             onChangeText={onChange}
             value={value}
-            placeholder="username"
+            placeholder="email"
           />
         )}
         name="email"
         defaultValue=""
       />
       {errors.email && <Text>This is required.</Text>}
+
       <Controller
         control={control}
         rules={{
@@ -53,6 +55,25 @@ const Login = () => {
         defaultValue=""
       />
       {errors.password && <Text>This is required.</Text>}
+
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({field: {onChange, value}}) => (
+          <TextInput
+            secureTextEntry={true}
+            style={styles.input}
+            onChangeText={onChange}
+            value={value}
+            placeholder="confirm password"
+          />
+        )}
+        name="confirmPassword"
+        defaultValue=""
+      />
+      {errors.confirmPassword && <Text>This is required.</Text>}
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
       <Button title="Register" onPress={() => Alert.alert('register')} />
     </View>
@@ -68,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Register;
