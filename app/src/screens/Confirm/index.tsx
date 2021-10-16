@@ -1,27 +1,35 @@
 import React from 'react';
-import {Button, TextInput, View, Text, StyleSheet} from 'react-native';
+import {Button, TextInput, View, Text, StyleSheet, Alert} from 'react-native';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Auth} from 'aws-amplify';
 
 import Layout from '../../Layout';
-// import {RootStackParamList} from '../../../App';
 
 type FormData = {
   email: string;
-  password: string;
+  code: string;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+async function confirmSignUp({email, code}: FormData) {
+  try {
+    await Auth.confirmSignUp(email, code);
+  } catch (error) {
+    console.log('error confirming sign up', error);
+  }
+}
 
-const Login = ({navigation}: Props) => {
+const Confirm = () => {
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
-  const onSubmit: SubmitHandler<FormData> = data => {
+
+  const onSubmit: SubmitHandler<FormData> = async data => {
+    await confirmSignUp(data);
     console.log(data, 'data');
   };
+
   return (
     <Layout>
       <View>
@@ -41,7 +49,7 @@ const Login = ({navigation}: Props) => {
           name="email"
           defaultValue=""
         />
-        {errors.email && <Text>This is required.</Text>}
+        {errors.code && <Text>This is required.</Text>}
         <Controller
           control={control}
           rules={{
@@ -49,22 +57,17 @@ const Login = ({navigation}: Props) => {
           }}
           render={({field: {onChange, value}}) => (
             <TextInput
-              secureTextEntry={true}
               style={styles.input}
               onChangeText={onChange}
               value={value}
-              placeholder="password"
+              placeholder="code"
             />
           )}
-          name="password"
+          name="code"
           defaultValue=""
         />
-        {errors.password && <Text>This is required.</Text>}
+        {errors.code && <Text>This is required.</Text>}
         <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-        <Button
-          title="Register"
-          onPress={() => navigation.navigate('Register')}
-        />
       </View>
     </Layout>
   );
@@ -79,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Confirm;

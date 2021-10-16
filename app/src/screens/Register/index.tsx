@@ -1,6 +1,9 @@
 import React from 'react';
 import {Button, TextInput, View, Text, StyleSheet, Alert} from 'react-native';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
+import {Auth} from 'aws-amplify';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
 import Layout from '../../Layout';
 
 type FormData = {
@@ -9,15 +12,36 @@ type FormData = {
   confirmPassword: string;
 };
 
-const Register = () => {
+async function signUp({email, password}: FormData) {
+  try {
+    const {user} = await Auth.signUp({
+      username: email,
+      password,
+      attributes: {
+        email, // optional
+      },
+    });
+    console.log(user);
+  } catch (error) {
+    console.log('error signing up:', error);
+  }
+}
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
+
+const Register = ({navigation}: Props) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
-  const onSubmit: SubmitHandler<FormData> = data => {
+
+  const onSubmit: SubmitHandler<FormData> = async data => {
+    await signUp(data);
+    navigation.navigate('Confirm');
     console.log(data, 'data');
   };
+
   return (
     <Layout>
       <View>

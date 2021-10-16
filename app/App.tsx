@@ -15,10 +15,12 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 // import {withAuthenticator} from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports';
 import Amplify from 'aws-amplify';
-import Login from './src/screens/Login';
-import Register from './src/screens/Register';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+import Login from './src/screens/Login';
+import Register from './src/screens/Register';
+import Confirm from './src/screens/Confirm';
 
 Amplify.configure(awsconfig);
 
@@ -27,9 +29,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Confirm" component={Confirm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
