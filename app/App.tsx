@@ -16,9 +16,26 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import awsconfig from './src/aws-exports';
 import Amplify from 'aws-amplify';
 import Login from './src/screens/Login';
+import Register from './src/screens/Register';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 Amplify.configure(awsconfig);
 
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
 // import {
 //   Colors,
 //   DebugInstructions,
@@ -113,22 +130,3 @@ Amplify.configure(awsconfig);
 // });
 
 // export default App;
-
-const App = () => {
-  return (
-    <SafeAreaView style={styles.layout}>
-      <ScrollView>
-        <Login />
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  layout: {
-    margin: 32,
-    paddingHorizontal: 24,
-  },
-});
-
-export default App;

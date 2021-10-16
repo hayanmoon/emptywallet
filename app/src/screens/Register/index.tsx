@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button, TextInput, View, Text, StyleSheet, Alert} from 'react-native';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
+import Layout from '../../Layout';
 
 type FormData = {
   email: string;
@@ -18,65 +19,67 @@ const Register = () => {
     console.log(data, 'data');
   };
   return (
-    <View>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-            placeholder="email"
-          />
-        )}
-        name="email"
-        defaultValue=""
-      />
-      {errors.email && <Text>This is required.</Text>}
+    <Layout>
+      <View>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, value}}) => (
+            <TextInput
+              style={styles.input}
+              onChangeText={onChange}
+              value={value}
+              placeholder="email"
+            />
+          )}
+          name="email"
+          defaultValue=""
+        />
+        {errors.email && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            secureTextEntry={true}
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-            placeholder="password"
-          />
-        )}
-        name="password"
-        defaultValue=""
-      />
-      {errors.password && <Text>This is required.</Text>}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, value}}) => (
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              onChangeText={onChange}
+              value={value}
+              placeholder="password"
+            />
+          )}
+          name="password"
+          defaultValue=""
+        />
+        {errors.password && <Text>This is required.</Text>}
 
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            secureTextEntry={true}
-            style={styles.input}
-            onChangeText={onChange}
-            value={value}
-            placeholder="confirm password"
-          />
-        )}
-        name="confirmPassword"
-        defaultValue=""
-      />
-      {errors.confirmPassword && <Text>This is required.</Text>}
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-      <Button title="Register" onPress={() => Alert.alert('register')} />
-    </View>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, value}}) => (
+            <TextInput
+              secureTextEntry={true}
+              style={styles.input}
+              onChangeText={onChange}
+              value={value}
+              placeholder="confirm password"
+            />
+          )}
+          name="confirmPassword"
+          defaultValue=""
+        />
+        {errors.confirmPassword && <Text>This is required.</Text>}
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button title="Register" onPress={() => Alert.alert('register')} />
+      </View>
+    </Layout>
   );
 };
 

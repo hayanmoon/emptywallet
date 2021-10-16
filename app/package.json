@@ -12,12 +12,16 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/netinfo": "^6.0.2",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.4",
     "amazon-cognito-identity-js": "^5.2.0",
     "aws-amplify": "^4.3.2",
     "aws-amplify-react-native": "^5.0.3",
     "react": "17.0.2",
     "react-hook-form": "^7.17.4",
-    "react-native": "0.66.0"
+    "react-native": "0.66.0",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
