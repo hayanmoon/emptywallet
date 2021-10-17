@@ -9,10 +9,7 @@
 //  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
-// @ts-ignore
-// import {withAuthenticator} from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports';
 import Amplify from 'aws-amplify';
 import {NavigationContainer} from '@react-navigation/native';
@@ -21,6 +18,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Confirm from './src/screens/Confirm';
+import Home from './src/screens/Home';
 
 Amplify.configure(awsconfig);
 
@@ -33,6 +31,7 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Confirm" component={Confirm} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

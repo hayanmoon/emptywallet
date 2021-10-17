@@ -4,7 +4,7 @@ import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import Layout from '../../Layout';
-// import {RootStackParamList} from '../../../App';
+import {CommonActions} from '@react-navigation/routers';
 
 type FormData = {
   email: string;
@@ -19,9 +19,18 @@ const Login = ({navigation}: Props) => {
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
+
   const onSubmit: SubmitHandler<FormData> = data => {
     console.log(data, 'data');
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'Home'}],
+      }),
+    );
+    // navigation.reset;
   };
+
   return (
     <Layout>
       <View>
