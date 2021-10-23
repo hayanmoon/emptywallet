@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -24,53 +23,32 @@ type Request events.APIGatewayProxyRequest
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context, req Request) (Response, error) {
-	transaction := Transaction{
-		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
-	}
-
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 
 	if err != nil {
 		log.Fatal("Config: cannot load configuration")
 	}
 
-	client := dynamodb.NewFromConfig(cfg)
+	dynamodbClient := dynamodb.NewFromConfig(cfg)
 
-	transactionRepo := TransactionRepository{client}
+	transactionRepo := TransactionRepository{dynamodbClient}
 
+	transaction := Transaction{
+		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
+	}
+
+	//parse request
 	err = json.Unmarshal([]byte(req.Body), &transaction)
 
 	if err != nil {
 		return Response{StatusCode: http.StatusBadRequest}, err
 	}
 
-	fmt.Println(transaction)
-
-	// transaction := Transaction{
-	// 	Username:    "ivan",
-	// 	Timestamp:   strconv.FormatInt(time.Now().Unix(), 10),
-	// 	Title:       "test",
-	// 	Description: "test",
-	// 	Amount:      "1234",
-	// }
-
 	err = transactionRepo.Create(transaction)
 
 	if err != nil {
 		return Response{StatusCode: http.StatusInternalServerError}, err
 	}
-	// session, err := session.NewSession()
-	// client := dynamodb.New(session)
-	// repo := TransactionRepository{client}
-	// repo.Create(transaction)
-	// var buf bytes.Buffer
-
-	// body, err := json.Marshal(map[string]interface{}{
-	// 	"message": "Go Serverless v1.0! Your function executed successfully!",
-	// })
-	// if err != nil {
-	// 	return Response{StatusCode: 404}, err
-	// }
 	// json.HTMLEscape(&buf, body)
 
 	// resp := Response{
