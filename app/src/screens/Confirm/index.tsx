@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, TextInput, View, Text, StyleSheet, Alert} from 'react-native';
+import {Button, TextInput, View, Text, StyleSheet} from 'react-native';
 import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import {Auth} from 'aws-amplify';
 
