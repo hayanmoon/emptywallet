@@ -4,21 +4,16 @@ import {useForm, Controller, SubmitHandler} from 'react-hook-form';
 import {Auth} from 'aws-amplify';
 
 import Layout from '../../Layout';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type FormData = {
   email: string;
   code: string;
 };
 
-async function confirmSignUp({email, code}: FormData) {
-  try {
-    await Auth.confirmSignUp(email, code);
-  } catch (error) {
-    console.log('error confirming sign up', error);
-  }
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'Confirm'>;
 
-const Confirm = () => {
+const Confirm = ({navigation}: Props) => {
   const {
     control,
     handleSubmit,
@@ -29,6 +24,18 @@ const Confirm = () => {
     await confirmSignUp(data);
     console.log(data, 'data');
   };
+
+  async function confirmSignUp({email, code}: FormData) {
+    try {
+      await Auth.confirmSignUp(email, code);
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Login'}],
+      });
+    } catch (error) {
+      console.log('error confirming sign up', error);
+    }
+  }
 
   return (
     <Layout>
