@@ -3,4 +3,5 @@ type RootStackParamList = {
   Register: undefined;
   Confirm: undefined;
   Home: undefined;
+  CreateTransaction: undefined;
 };

@@ -20,10 +20,18 @@ function Home({navigation}: HomeProps) {
       routes: [{name: 'Login'}],
     });
   };
+
+  function CreateTransaction() {
+    navigation.navigate('CreateTransaction');
+  }
+
   return (
     <Layout>
       <View>
         <Text>Home</Text>
+        <Button title="Create Transaction" onPress={CreateTransaction}>
+          Create Transaction
+        </Button>
         <Button title="Logout" onPress={Logout}>
           Logout
         </Button>
