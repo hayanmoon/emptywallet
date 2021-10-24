@@ -1,17 +1,13 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 type Props = {
   children: JSX.Element;
 };
 
-const Layout = ({children}: Props) => {
-  return (
-    <SafeAreaView style={styles.layout}>
-      <ScrollView>{children}</ScrollView>
-    </SafeAreaView>
-  );
-};
+function Layout({children}: Props) {
+  return <SafeAreaView style={styles.layout}>{children}</SafeAreaView>;
+}
 
 const styles = StyleSheet.create({
   layout: {
